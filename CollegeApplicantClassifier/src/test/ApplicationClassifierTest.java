@@ -174,7 +174,7 @@ public class ApplicationClassifierTest {
 		applicant.setFirstName("JOhn");
 		Applicant responseApp = applicantClassifier.getApplicantReview(applicant);
 		assertEquals(responseApp.getVerdict(), ReviewOutcomeType.INSTANT_REJECT.verdict);
-		assertEquals(responseApp.getReason(), Constants.INSTANT_REJECT_FIRST_NAME_LOWER + 2);
+		assertEquals(responseApp.getReason(), Constants.INSTANT_REJECT_FIRST_NAME_LOWER);
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class ApplicationClassifierTest {
 		applicant.setLastName("MatHew");
 		Applicant responseApp = applicantClassifier.getApplicantReview(applicant);
 		assertEquals(responseApp.getVerdict(), ReviewOutcomeType.INSTANT_REJECT.verdict);
-		assertEquals(responseApp.getReason(), Constants.INSTANT_REJECT_LAST_NAME_LOWER + 4);
+		assertEquals(responseApp.getReason(), Constants.INSTANT_REJECT_LAST_NAME_LOWER);
 	}
 
 }

@@ -16,7 +16,7 @@ public class Constants {
 	public static final String INSTANT_REJECT_AGE_INVALID = "Invalid Age";
 	public static final String INSTANT_REJECT_FIRST_NAME_UPPER_CASE = "First alphabet of First Name  is not Upper Case";
 	public static final String INSTANT_REJECT_LAST_NAME_UPPER_CASE = "First alphabet of Last Name is not Upper Case";
-	public static final String INSTANT_REJECT_FIRST_NAME_LOWER = "First Name does not contain lower case at ";
-	public static final String INSTANT_REJECT_LAST_NAME_LOWER = "Last Name does not contain lower case at ";
+	public static final String INSTANT_REJECT_FIRST_NAME_LOWER = "First Name does not contain lower case.";
+	public static final String INSTANT_REJECT_LAST_NAME_LOWER = "Last Name does not contain lower case.";
 
 }

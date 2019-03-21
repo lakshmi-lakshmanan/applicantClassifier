@@ -43,10 +43,10 @@ public class ApplicantClassifierHelper {
 		instantReject = checkFirstLetterCase(instantReject, applicant, charsLastName,
 				Constants.INSTANT_REJECT_LAST_NAME_UPPER_CASE);
 
-		instantReject = checkRemainingLettersCase(instantReject, charsFirstName, applicant,
+		instantReject = checkRemainingLettersCase(instantReject, applicant.getFirstName(), applicant,
 				Constants.INSTANT_REJECT_FIRST_NAME_LOWER);
 
-		instantReject = checkRemainingLettersCase(instantReject, charsLastName, applicant,
+		instantReject = checkRemainingLettersCase(instantReject, applicant.getLastName(), applicant,
 				Constants.INSTANT_REJECT_LAST_NAME_LOWER);
 
 		return instantReject;
@@ -61,15 +61,13 @@ public class ApplicantClassifierHelper {
 	 * @param reason
 	 * @return Boolean
 	 */
-	private Boolean checkRemainingLettersCase(Boolean instantReject, char[] nameChars, Applicant applicant,
+	private Boolean checkRemainingLettersCase(Boolean instantReject, String nameChars, Applicant applicant,
 			String reason) {
 		if (instantReject != Boolean.TRUE && nameChars != null) {
-			for (int i = 1; i < nameChars.length; i++) {
-				if (!Character.isLowerCase(nameChars[i])) {
-					instantReject = Boolean.TRUE;
-					applicant.setReason(reason + (i + 1));
-					break;
-				}
+			String subName = nameChars.substring(1, nameChars.length());
+			if (!subName.equals(subName.toLowerCase())) {
+				instantReject = Boolean.TRUE;
+				applicant.setReason(reason);
 			}
 		}
 		return instantReject;
