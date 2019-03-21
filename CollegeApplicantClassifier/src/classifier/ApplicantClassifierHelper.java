@@ -30,17 +30,11 @@ public class ApplicantClassifierHelper {
 	 */
 	protected Boolean checkPatternforNames(Applicant applicant) {
 		Boolean instantReject = Boolean.FALSE;
-		char[] charsFirstName = null;
-		char[] charsLastName = null;
-		if (applicant.getFirstName() != null)
-			charsFirstName = applicant.getFirstName().toCharArray();
-		if (applicant.getLastName() != null)
-			charsLastName = applicant.getLastName().toCharArray();
 
-		instantReject = checkFirstLetterCase(instantReject, applicant, charsFirstName,
+		instantReject = checkFirstLetterCase(instantReject, applicant, applicant.getFirstName(),
 				Constants.INSTANT_REJECT_FIRST_NAME_UPPER_CASE);
 
-		instantReject = checkFirstLetterCase(instantReject, applicant, charsLastName,
+		instantReject = checkFirstLetterCase(instantReject, applicant, applicant.getLastName(),
 				Constants.INSTANT_REJECT_LAST_NAME_UPPER_CASE);
 
 		instantReject = checkRemainingLettersCase(instantReject, applicant.getFirstName(), applicant,
@@ -77,12 +71,12 @@ public class ApplicantClassifierHelper {
 	 * Checks for upper case for first index.
 	 * 
 	 * @param applicant
-	 * @param nameChar
+	 * @param nameString
 	 * @param reason
 	 * @return Boolean
 	 */
-	private Boolean checkFirstLetterCase(Boolean instantReject, Applicant applicant, char[] nameChar, String reason) {
-		if (nameChar != null && !(Character.isUpperCase(nameChar[Constants.INDEX_FOR_FIRST_NAME_REJECT]))) {
+	private Boolean checkFirstLetterCase(Boolean instantReject, Applicant applicant, String nameString, String reason) {
+		if (nameString != null && !Character.isUpperCase(nameString.charAt(0))) {
 			instantReject = Boolean.TRUE;
 			applicant.setReason(reason);
 		}
