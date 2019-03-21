@@ -37,30 +37,37 @@ public class ApplicantClassifierHelper {
 		if (applicant.getLastName() != null)
 			charsLastName = applicant.getLastName().toCharArray();
 
-		if (charsFirstName != null && !(Character.isUpperCase(charsFirstName[Constants.INDEX_FOR_FIRST_NAME_REJECT]))) {
-			instantReject = Boolean.TRUE;
-			applicant.setReason(Constants.INSTANT_REJECT_FIRST_NAME_UPPER_CASE);
-		} else if (charsLastName != null
-				&& !(Character.isUpperCase(charsLastName[Constants.INDEX_FOR_LAST_NAME_REJECT]))) {
-			instantReject = Boolean.TRUE;
-			applicant.setReason(Constants.INSTANT_REJECT_LAST_NAME_UPPER_CASE);
-		}
+		instantReject = checkFirstLetterCase(instantReject, applicant, charsFirstName,
+				Constants.INSTANT_REJECT_FIRST_NAME_UPPER_CASE);
 
-		if (instantReject != Boolean.TRUE && charsFirstName != null) {
-			for (int i = 1; i < charsFirstName.length; i++) {
-				if (!Character.isLowerCase(charsFirstName[i])) {
-					instantReject = Boolean.TRUE;
-					applicant.setReason(Constants.INSTANT_REJECT_FIRST_NAME_LOWER + (i + 1));
-					break;
-				}
-			}
-		}
+		instantReject = checkFirstLetterCase(instantReject, applicant, charsLastName,
+				Constants.INSTANT_REJECT_LAST_NAME_UPPER_CASE);
 
-		if (instantReject != Boolean.TRUE && charsLastName != null) {
-			for (int i = 1; i < charsLastName.length; i++) {
-				if (!Character.isLowerCase(charsLastName[i])) {
+		instantReject = checkRemainingLettersCase(instantReject, charsFirstName, applicant,
+				Constants.INSTANT_REJECT_FIRST_NAME_LOWER);
+
+		instantReject = checkRemainingLettersCase(instantReject, charsLastName, applicant,
+				Constants.INSTANT_REJECT_LAST_NAME_LOWER);
+
+		return instantReject;
+	}
+
+	/**
+	 * Checks for lower case of the chars from index 1
+	 * 
+	 * @param instantReject
+	 * @param nameChars
+	 * @param applicant
+	 * @param reason
+	 * @return Boolean
+	 */
+	private Boolean checkRemainingLettersCase(Boolean instantReject, char[] nameChars, Applicant applicant,
+			String reason) {
+		if (instantReject != Boolean.TRUE && nameChars != null) {
+			for (int i = 1; i < nameChars.length; i++) {
+				if (!Character.isLowerCase(nameChars[i])) {
 					instantReject = Boolean.TRUE;
-					applicant.setReason(Constants.INSTANT_REJECT_LAST_NAME_LOWER + (i + 1));
+					applicant.setReason(reason + (i + 1));
 					break;
 				}
 			}
@@ -68,4 +75,19 @@ public class ApplicantClassifierHelper {
 		return instantReject;
 	}
 
+	/**
+	 * Checks for upper case for first index.
+	 * 
+	 * @param applicant
+	 * @param nameChar
+	 * @param reason
+	 * @return Boolean
+	 */
+	private Boolean checkFirstLetterCase(Boolean instantReject, Applicant applicant, char[] nameChar, String reason) {
+		if (nameChar != null && !(Character.isUpperCase(nameChar[Constants.INDEX_FOR_FIRST_NAME_REJECT]))) {
+			instantReject = Boolean.TRUE;
+			applicant.setReason(reason);
+		}
+		return instantReject;
+	}
 }
